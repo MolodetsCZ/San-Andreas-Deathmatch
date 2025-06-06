@@ -12,6 +12,15 @@ new
 
 main() {}
 
+PlayerName(playerid)
+{
+	new
+	    name[MAX_PLAYER_NAME + 1];
+	    
+    GetPlayerName(playerid, name, sizeof(name));
+	return name;
+}
+
 public OnGameModeInit()
 {
 	SetGameModeText("Welcome to Las Venturas");
@@ -35,11 +44,28 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
+	new
+	    string[128];
+	    
+	format(string, sizeof(string), "%s(%d) has joined the server.", PlayerName(playerid), playerid);
+	SendClientMessageToAll(0xC4C4C4FF, string);
 	return true;
 }
 
 public OnPlayerDisconnect(playerid, reason)
 {
+	new
+	    string[128];
+	    
+	new
+		reason_string[3][] = {
+			"Timeout/Crash",
+			"Quit",
+			"Kick/Ban"
+	};
+
+	format(string, sizeof(string), "%s(%d) left the server (%s).", PlayerName(playerid), playerid, reason_string[reason]);
+	SendClientMessageToAll(0xC4C4C4FF, string);
 	return true;
 }
 
