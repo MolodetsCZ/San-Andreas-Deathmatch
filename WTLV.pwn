@@ -10,6 +10,14 @@ new
 	    {2004.8174, 1545.2008, 13.5859, 270.7013}
 };
 
+enum
+	e_playerData {
+	    e_playerData_Cash
+};
+
+new
+    playerData[MAX_PLAYERS][e_playerData];
+
 main() {}
 
 PlayerName(playerid)
@@ -45,17 +53,19 @@ public OnPlayerRequestClass(playerid, classid)
 public OnPlayerConnect(playerid)
 {
 	new
-	    string[128];
+	    string[75];
 	    
 	format(string, sizeof(string), "%s(%d) has joined the server.", PlayerName(playerid), playerid);
 	SendClientMessageToAll(0xC4C4C4FF, string);
+	
+	playerData[playerid][e_playerData_Cash] = 50000;
 	return true;
 }
 
 public OnPlayerDisconnect(playerid, reason)
 {
 	new
-	    string[128];
+	    string[75];
 	    
 	new
 		reason_string[3][] = {
@@ -206,6 +216,10 @@ public OnRconLoginAttempt(ip[], password[], success)
 
 public OnPlayerUpdate(playerid)
 {
+	if (GetPlayerMoney(playerid) != playerData[playerid][e_playerData_Cash])
+	{
+	    ResetPlayerMoney(playerid), GivePlayerMoney(playerid, playerData[playerid][e_playerData_Cash]);
+    }
 	return true;
 }
 
