@@ -68,10 +68,10 @@ public OnPlayerDisconnect(playerid, reason)
 	    string[75];
 	    
 	new
-		reason_string[3][] = {
-			"Timeout/Crash",
-			"Quit",
-			"Kick/Ban"
+	    reason_string[3][] = {
+		"Timeout/Crash",
+		"Quit",
+		"Kick/Ban"
 	};
 
 	format(string, sizeof(string), "%s(%d) left the server (%s).", PlayerName(playerid), playerid, reason_string[reason]);
@@ -219,7 +219,7 @@ public OnPlayerUpdate(playerid)
 	if (GetPlayerMoney(playerid) != playerData[playerid][e_playerData_Cash])
 	{
 	    ResetPlayerMoney(playerid), GivePlayerMoney(playerid, playerData[playerid][e_playerData_Cash]);
-    }
+	}
 	return true;
 }
 
